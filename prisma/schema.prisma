@@ -1,0 +1,247 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Auth.js v5 / NextAuth schema ───────────────────────────────────
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  emailVerified  DateTime?
+  name           String?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+
+  accounts       Account[]
+  sessions       Session[]
+  warehouses     Warehouse[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ── Агуулахын загвар ───────────────────────────────────────────────
+
+model Warehouse {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  createdAt DateTime @default(now())
+
+  owner                User                 @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products             Product[]
+  stockIns             StockIn[]
+  stockOuts            StockOut[]
+  notificationSetting  NotificationSetting?
+  notifications        Notification[]
+  pushSubscriptions    PushSubscription[]
+
+  @@index([ownerId])
+}
+
+/// Барааны master бүртгэл
+model Product {
+  id           String   @id @default(cuid())
+  warehouseId  String
+  /// Агуулах дотор давтагдахгүй код
+  code         String
+  name         String
+  unit         String   @default("ш")
+  category     String   @default("Ерөнхий")
+  unitPrice    Float    @default(0)
+  /// Доод хязгаар — үүнээс доош бол low-stock сэрэмжлүүлэг
+  reorderLevel Float    @default(0)
+  /// true бол дуусах хугацааны хяналт хийгдэнэ
+  isPerishable Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  warehouse     Warehouse      @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  batches       Batch[]
+  stockIns      StockIn[]
+  stockOuts     StockOut[]
+  notifications Notification[]
+
+  @@unique([warehouseId, code])
+  @@index([warehouseId])
+}
+
+/// Лот — нэг барааны нэг орлогын парти (дуусах хугацаагаар ялгагдана)
+model Batch {
+  id         String    @id @default(cuid())
+  productId  String
+  batchNo    String
+  /// null бол хугацаагүй бараа
+  expiryDate DateTime?
+  qtyIn      Float     @default(0)
+  qtyOut     Float     @default(0)
+  createdAt  DateTime  @default(now())
+
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  stockIns      StockIn[]
+  stockOuts     StockOut[]
+  notifications Notification[]
+
+  @@index([productId])
+  @@index([expiryDate])
+}
+
+/// Орлого
+model StockIn {
+  id          String   @id @default(cuid())
+  warehouseId String
+  productId   String
+  batchId     String
+  date        DateTime
+  qty         Float
+  unitPrice   Float    @default(0)
+  supplier    String?
+  docNo       String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  batch     Batch     @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@index([warehouseId])
+  @@index([productId])
+  @@index([date])
+}
+
+/// Зарлага
+model StockOut {
+  id          String   @id @default(cuid())
+  warehouseId String
+  productId   String
+  batchId     String
+  date        DateTime
+  qty         Float
+  recipient   String?
+  docNo       String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  batch     Batch     @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@index([warehouseId])
+  @@index([productId])
+  @@index([date])
+}
+
+// ── Мэдэгдлийн загвар ─────────────────────────────────────────────
+
+model NotificationSetting {
+  id                String  @id @default(cuid())
+  warehouseId       String  @unique
+  /// Хугацааны босго өдрүүд — ж: [60,30,14,7]
+  expiryThresholds  Int[]   @default([60, 30, 14, 7])
+  lowStockEnabled   Boolean @default(true)
+  emailEnabled      Boolean @default(true)
+  pushEnabled       Boolean @default(false)
+  /// Өдрийн скан хийх цаг (0-23)
+  dailyScanHour     Int     @default(8)
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  warehouseId String
+  /// "EXPIRY" | "EXPIRED" | "LOW_STOCK"
+  type        String
+  /// "NOTICE" | "WARNING" | "CRITICAL"
+  severity    String
+  title       String
+  body        String
+  productId   String?
+  batchId     String?
+  /// Идемпотент түлхүүр — нэг өдөр давхардахаас сэргийлнэ
+  dedupeKey   String    @unique
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  warehouse  Warehouse              @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  product    Product?               @relation(fields: [productId], references: [id], onDelete: SetNull)
+  batch      Batch?                 @relation(fields: [batchId], references: [id], onDelete: SetNull)
+  deliveries NotificationDelivery[]
+
+  @@index([warehouseId])
+  @@index([warehouseId, readAt])
+  @@index([createdAt])
+}
+
+model NotificationDelivery {
+  id             String    @id @default(cuid())
+  notificationId String
+  /// "IN_APP" | "EMAIL" | "PUSH"
+  channel        String
+  /// "PENDING" | "SENT" | "FAILED"
+  status         String    @default("PENDING")
+  attempts       Int       @default(0)
+  lastError      String?
+  nextRetryAt    DateTime?
+  sentAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@index([notificationId])
+  @@index([status, nextRetryAt])
+}
+
+model PushSubscription {
+  id          String   @id @default(cuid())
+  warehouseId String
+  endpoint    String   @unique
+  p256dh      String
+  auth        String
+  createdAt   DateTime @default(now())
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+
+  @@index([warehouseId])
+}
