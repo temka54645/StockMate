@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="mn" className={`${montserrat.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground" suppressHydrationWarning>
         <SessionProviderWrapper>{children}</SessionProviderWrapper>
       </body>
     </html>
