@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef, useEffect } from "react";
-import { ChevronDown, Warehouse, Plus, Check, Loader2 } from "lucide-react";
+import { ChevronsUpDown, Plus, Check, Loader2, Warehouse } from "lucide-react";
 import { switchWarehouseAction, createWarehouseAction } from "@/lib/warehouse-actions";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +9,25 @@ interface WarehouseOption {
   id: string;
   name: string;
   productCount: number;
+}
+
+/** Агуулахын нэрийн эхний үсгийг аватар болгон харуулна */
+function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md" }) {
+  const letter = name.trim()[0]?.toUpperCase() ?? "А";
+  // Нэрнээс тогтмол өнгө үүсгэнэ
+  const colors = [
+    "bg-violet-500", "bg-blue-500", "bg-emerald-500",
+    "bg-orange-500", "bg-rose-500", "bg-cyan-500", "bg-amber-500",
+  ];
+  const color = colors[name.charCodeAt(0) % colors.length];
+  const cls = size === "sm"
+    ? "w-5 h-5 rounded-md text-[10px]"
+    : "w-7 h-7 rounded-lg text-xs";
+  return (
+    <span className={`${cls} ${color} text-white font-bold flex items-center justify-center flex-shrink-0`}>
+      {letter}
+    </span>
+  );
 }
 
 export default function WarehouseSwitcher({
@@ -24,17 +43,25 @@ export default function WarehouseSwitcher({
   const [newName, setNewName] = useState("");
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const active = warehouses.find((w) => w.id === activeWarehouseId);
 
-  // Гадна дарахад хаах
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+        setCreating(false);
+        setNewName("");
+      }
     }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (creating) inputRef.current?.focus();
+  }, [creating]);
 
   function switchWarehouse(id: string) {
     if (id === activeWarehouseId) { setOpen(false); return; }
@@ -57,58 +84,68 @@ export default function WarehouseSwitcher({
   }
 
   return (
-    <div ref={ref} className="relative px-3 py-2 border-b border-border">
-      {/* Trigger */}
+    <div ref={ref} className="relative px-2 py-2">
+      {/* Trigger — sidebar header-ийн нэг хэсэг болгон харагдана */}
       <button
         onClick={() => { setOpen((v) => !v); setCreating(false); }}
-        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-accent transition-colors text-left group"
+        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-colors group
+          ${open ? "bg-accent" : "hover:bg-accent"}`}
       >
-        <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <Warehouse className="w-3.5 h-3.5 text-primary" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-foreground truncate leading-tight">
+        {active ? (
+          <Avatar name={active.name} />
+        ) : (
+          <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+            <Warehouse className="w-3.5 h-3.5 text-muted-foreground" />
+          </div>
+        )}
+
+        <div className="flex-1 min-w-0 text-left">
+          <p className="text-sm font-semibold text-foreground truncate leading-tight">
             {active?.name ?? "Агуулах сонгох"}
           </p>
-          <p className="text-[10px] text-muted-foreground leading-tight">
-            {active?.productCount ?? 0} бараа
-          </p>
         </div>
+
         {isPending ? (
           <Loader2 className="w-3.5 h-3.5 text-muted-foreground animate-spin flex-shrink-0" />
         ) : (
-          <ChevronDown
-            className={`w-3.5 h-3.5 text-muted-foreground flex-shrink-0 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
-          />
+          <ChevronsUpDown className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
         )}
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown panel */}
       {open && (
-        <div className="absolute top-full left-3 right-3 mt-1 bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden animate-pop-in">
+        <div className="absolute top-full left-2 right-2 mt-1 bg-popover border border-border rounded-xl shadow-lg z-50 overflow-hidden animate-pop-in">
           {/* Агуулахуудын жагсаалт */}
-          <div className="max-h-48 overflow-y-auto py-1">
-            {warehouses.map((w) => (
-              <button
-                key={w.id}
-                onClick={() => switchWarehouse(w.id)}
-                className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-accent text-left transition-colors"
-              >
-                <div className="w-4 flex-shrink-0 flex items-center justify-center">
-                  {w.id === activeWarehouseId && <Check className="w-3.5 h-3.5 text-primary" />}
-                </div>
-                <span className="flex-1 truncate text-sm font-medium text-foreground">{w.name}</span>
-                <span className="text-xs text-muted-foreground tabular-nums">{w.productCount}</span>
-              </button>
-            ))}
+          <div className="p-1.5">
+            <p className="px-2 py-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+              Агуулахууд
+            </p>
+            {warehouses.map((w) => {
+              const isActive = w.id === activeWarehouseId;
+              return (
+                <button
+                  key={w.id}
+                  onClick={() => switchWarehouse(w.id)}
+                  className={`w-full flex items-center gap-2.5 px-2 py-2 rounded-lg text-left transition-colors
+                    ${isActive ? "bg-accent" : "hover:bg-accent"}`}
+                >
+                  <Avatar name={w.name} size="sm" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">{w.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{w.productCount} бараа</p>
+                  </div>
+                  {isActive && <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />}
+                </button>
+              );
+            })}
           </div>
 
           {/* Шинэ агуулах нэмэх */}
-          <div className="border-t border-border">
+          <div className="border-t border-border p-1.5">
             {creating ? (
-              <div className="flex gap-2 p-2">
+              <div className="flex items-center gap-1.5 px-1">
                 <input
-                  autoFocus
+                  ref={inputRef}
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   onKeyDown={(e) => {
@@ -116,23 +153,25 @@ export default function WarehouseSwitcher({
                     if (e.key === "Escape") { setCreating(false); setNewName(""); }
                   }}
                   placeholder="Агуулахын нэр..."
-                  className="flex-1 text-xs border border-input rounded-lg px-2.5 py-1.5 outline-none focus:ring-1 focus:ring-ring bg-background"
+                  className="flex-1 text-sm border border-input rounded-lg px-2.5 py-1.5 outline-none focus:ring-1 focus:ring-ring bg-background min-w-0"
                 />
                 <button
                   onClick={handleCreate}
                   disabled={!newName.trim() || isPending}
-                  className="text-xs px-2.5 py-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-50 flex items-center gap-1 font-medium"
+                  className="flex-shrink-0 text-xs px-2.5 py-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-50 font-medium transition-opacity"
                 >
-                  {isPending ? <Loader2 className="w-3 h-3 animate-spin" /> : "Нэмэх"}
+                  {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Нэмэх"}
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => setCreating(true)}
-                className="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-accent text-left transition-colors"
+                className="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-accent text-left transition-colors text-muted-foreground hover:text-foreground"
               >
-                <Plus className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Шинэ агуулах нэмэх</span>
+                <div className="w-5 h-5 rounded-md border-2 border-dashed border-border flex items-center justify-center flex-shrink-0">
+                  <Plus className="w-3 h-3" />
+                </div>
+                <span className="text-sm">Шинэ агуулах</span>
               </button>
             )}
           </div>

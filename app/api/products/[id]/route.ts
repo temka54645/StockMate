@@ -5,11 +5,14 @@ import { z } from "zod";
 
 const updateSchema = z.object({
   name: z.string().min(1).max(200).optional(),
-  unit: z.string().min(1).max(20).optional(),
+  unit: z.string().min(1).max(30).optional(),
   category: z.string().max(100).optional(),
   unitPrice: z.number().min(0).optional(),
   reorderLevel: z.number().min(0).optional(),
   isPerishable: z.boolean().optional(),
+  imageUrl: z.string().nullable().optional(),
+  barcode: z.string().max(100).nullable().optional(),
+  location: z.string().max(100).nullable().optional(),
 });
 
 export async function PATCH(

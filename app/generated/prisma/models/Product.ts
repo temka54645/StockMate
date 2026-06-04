@@ -46,6 +46,9 @@ export type ProductMinAggregateOutputType = {
   unitPrice: number | null
   reorderLevel: number | null
   isPerishable: boolean | null
+  imageUrl: string | null
+  barcode: string | null
+  location: string | null
   createdAt: Date | null
 }
 
@@ -59,6 +62,9 @@ export type ProductMaxAggregateOutputType = {
   unitPrice: number | null
   reorderLevel: number | null
   isPerishable: boolean | null
+  imageUrl: string | null
+  barcode: string | null
+  location: string | null
   createdAt: Date | null
 }
 
@@ -72,6 +78,9 @@ export type ProductCountAggregateOutputType = {
   unitPrice: number
   reorderLevel: number
   isPerishable: number
+  imageUrl: number
+  barcode: number
+  location: number
   createdAt: number
   _all: number
 }
@@ -97,6 +106,9 @@ export type ProductMinAggregateInputType = {
   unitPrice?: true
   reorderLevel?: true
   isPerishable?: true
+  imageUrl?: true
+  barcode?: true
+  location?: true
   createdAt?: true
 }
 
@@ -110,6 +122,9 @@ export type ProductMaxAggregateInputType = {
   unitPrice?: true
   reorderLevel?: true
   isPerishable?: true
+  imageUrl?: true
+  barcode?: true
+  location?: true
   createdAt?: true
 }
 
@@ -123,6 +138,9 @@ export type ProductCountAggregateInputType = {
   unitPrice?: true
   reorderLevel?: true
   isPerishable?: true
+  imageUrl?: true
+  barcode?: true
+  location?: true
   createdAt?: true
   _all?: true
 }
@@ -223,6 +241,9 @@ export type ProductGroupByOutputType = {
   unitPrice: number
   reorderLevel: number
   isPerishable: boolean
+  imageUrl: string | null
+  barcode: string | null
+  location: string | null
   createdAt: Date
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
@@ -259,6 +280,9 @@ export type ProductWhereInput = {
   unitPrice?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.FloatFilter<"Product"> | number
   isPerishable?: Prisma.BoolFilter<"Product"> | boolean
+  imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableFilter<"Product"> | string | null
+  location?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   warehouse?: Prisma.XOR<Prisma.WarehouseScalarRelationFilter, Prisma.WarehouseWhereInput>
   batches?: Prisma.BatchListRelationFilter
@@ -277,6 +301,9 @@ export type ProductOrderByWithRelationInput = {
   unitPrice?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isPerishable?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   warehouse?: Prisma.WarehouseOrderByWithRelationInput
   batches?: Prisma.BatchOrderByRelationAggregateInput
@@ -299,6 +326,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   unitPrice?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.FloatFilter<"Product"> | number
   isPerishable?: Prisma.BoolFilter<"Product"> | boolean
+  imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableFilter<"Product"> | string | null
+  location?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   warehouse?: Prisma.XOR<Prisma.WarehouseScalarRelationFilter, Prisma.WarehouseWhereInput>
   batches?: Prisma.BatchListRelationFilter
@@ -317,6 +347,9 @@ export type ProductOrderByWithAggregationInput = {
   unitPrice?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isPerishable?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
@@ -338,6 +371,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   unitPrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   reorderLevel?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   isPerishable?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
 
@@ -350,6 +386,9 @@ export type ProductCreateInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   warehouse: Prisma.WarehouseCreateNestedOneWithoutProductsInput
   batches?: Prisma.BatchCreateNestedManyWithoutProductInput
@@ -368,6 +407,9 @@ export type ProductUncheckedCreateInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutProductInput
@@ -384,6 +426,9 @@ export type ProductUpdateInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warehouse?: Prisma.WarehouseUpdateOneRequiredWithoutProductsNestedInput
   batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
@@ -402,6 +447,9 @@ export type ProductUncheckedUpdateInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutProductNestedInput
@@ -419,6 +467,9 @@ export type ProductCreateManyInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
 }
 
@@ -431,6 +482,9 @@ export type ProductUpdateManyMutationInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -444,6 +498,9 @@ export type ProductUncheckedUpdateManyInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -472,6 +529,9 @@ export type ProductCountOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isPerishable?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -490,6 +550,9 @@ export type ProductMaxOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isPerishable?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -503,6 +566,9 @@ export type ProductMinOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isPerishable?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -642,6 +708,9 @@ export type ProductCreateWithoutWarehouseInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchCreateNestedManyWithoutProductInput
   stockIns?: Prisma.StockInCreateNestedManyWithoutProductInput
@@ -658,6 +727,9 @@ export type ProductUncheckedCreateWithoutWarehouseInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutProductInput
@@ -704,6 +776,9 @@ export type ProductScalarWhereInput = {
   unitPrice?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.FloatFilter<"Product"> | number
   isPerishable?: Prisma.BoolFilter<"Product"> | boolean
+  imageUrl?: Prisma.StringNullableFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableFilter<"Product"> | string | null
+  location?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
 
@@ -716,6 +791,9 @@ export type ProductCreateWithoutBatchesInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   warehouse: Prisma.WarehouseCreateNestedOneWithoutProductsInput
   stockIns?: Prisma.StockInCreateNestedManyWithoutProductInput
@@ -733,6 +811,9 @@ export type ProductUncheckedCreateWithoutBatchesInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutProductInput
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutProductInput
@@ -764,6 +845,9 @@ export type ProductUpdateWithoutBatchesInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warehouse?: Prisma.WarehouseUpdateOneRequiredWithoutProductsNestedInput
   stockIns?: Prisma.StockInUpdateManyWithoutProductNestedInput
@@ -781,6 +865,9 @@ export type ProductUncheckedUpdateWithoutBatchesInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutProductNestedInput
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutProductNestedInput
@@ -796,6 +883,9 @@ export type ProductCreateWithoutStockInsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   warehouse: Prisma.WarehouseCreateNestedOneWithoutProductsInput
   batches?: Prisma.BatchCreateNestedManyWithoutProductInput
@@ -813,6 +903,9 @@ export type ProductUncheckedCreateWithoutStockInsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutProductInput
@@ -844,6 +937,9 @@ export type ProductUpdateWithoutStockInsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warehouse?: Prisma.WarehouseUpdateOneRequiredWithoutProductsNestedInput
   batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
@@ -861,6 +957,9 @@ export type ProductUncheckedUpdateWithoutStockInsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutProductNestedInput
@@ -876,6 +975,9 @@ export type ProductCreateWithoutStockOutsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   warehouse: Prisma.WarehouseCreateNestedOneWithoutProductsInput
   batches?: Prisma.BatchCreateNestedManyWithoutProductInput
@@ -893,6 +995,9 @@ export type ProductUncheckedCreateWithoutStockOutsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutProductInput
@@ -924,6 +1029,9 @@ export type ProductUpdateWithoutStockOutsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warehouse?: Prisma.WarehouseUpdateOneRequiredWithoutProductsNestedInput
   batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
@@ -941,6 +1049,9 @@ export type ProductUncheckedUpdateWithoutStockOutsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutProductNestedInput
@@ -956,6 +1067,9 @@ export type ProductCreateWithoutNotificationsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   warehouse: Prisma.WarehouseCreateNestedOneWithoutProductsInput
   batches?: Prisma.BatchCreateNestedManyWithoutProductInput
@@ -973,6 +1087,9 @@ export type ProductUncheckedCreateWithoutNotificationsInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
   batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutProductInput
@@ -1004,6 +1121,9 @@ export type ProductUpdateWithoutNotificationsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   warehouse?: Prisma.WarehouseUpdateOneRequiredWithoutProductsNestedInput
   batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
@@ -1021,6 +1141,9 @@ export type ProductUncheckedUpdateWithoutNotificationsInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutProductNestedInput
@@ -1036,6 +1159,9 @@ export type ProductCreateManyWarehouseInput = {
   unitPrice?: number
   reorderLevel?: number
   isPerishable?: boolean
+  imageUrl?: string | null
+  barcode?: string | null
+  location?: string | null
   createdAt?: Date | string
 }
 
@@ -1048,6 +1174,9 @@ export type ProductUpdateWithoutWarehouseInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
   stockIns?: Prisma.StockInUpdateManyWithoutProductNestedInput
@@ -1064,6 +1193,9 @@ export type ProductUncheckedUpdateWithoutWarehouseInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutProductNestedInput
@@ -1080,6 +1212,9 @@ export type ProductUncheckedUpdateManyWithoutWarehouseInput = {
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.FloatFieldUpdateOperationsInput | number
   isPerishable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1151,6 +1286,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   unitPrice?: boolean
   reorderLevel?: boolean
   isPerishable?: boolean
+  imageUrl?: boolean
+  barcode?: boolean
+  location?: boolean
   createdAt?: boolean
   warehouse?: boolean | Prisma.WarehouseDefaultArgs<ExtArgs>
   batches?: boolean | Prisma.Product$batchesArgs<ExtArgs>
@@ -1170,6 +1308,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   unitPrice?: boolean
   reorderLevel?: boolean
   isPerishable?: boolean
+  imageUrl?: boolean
+  barcode?: boolean
+  location?: boolean
   createdAt?: boolean
   warehouse?: boolean | Prisma.WarehouseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -1184,6 +1325,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   unitPrice?: boolean
   reorderLevel?: boolean
   isPerishable?: boolean
+  imageUrl?: boolean
+  barcode?: boolean
+  location?: boolean
   createdAt?: boolean
   warehouse?: boolean | Prisma.WarehouseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
@@ -1198,10 +1342,13 @@ export type ProductSelectScalar = {
   unitPrice?: boolean
   reorderLevel?: boolean
   isPerishable?: boolean
+  imageUrl?: boolean
+  barcode?: boolean
+  location?: boolean
   createdAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "warehouseId" | "code" | "name" | "unit" | "category" | "unitPrice" | "reorderLevel" | "isPerishable" | "createdAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "warehouseId" | "code" | "name" | "unit" | "category" | "unitPrice" | "reorderLevel" | "isPerishable" | "imageUrl" | "barcode" | "location" | "createdAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   warehouse?: boolean | Prisma.WarehouseDefaultArgs<ExtArgs>
   batches?: boolean | Prisma.Product$batchesArgs<ExtArgs>
@@ -1245,6 +1392,18 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
      * true бол дуусах хугацааны хяналт хийгдэнэ
      */
     isPerishable: boolean
+    /**
+     * Барааны зураг (base64 thumbnail эсвэл URL)
+     */
+    imageUrl: string | null
+    /**
+     * Баркод / SKU
+     */
+    barcode: string | null
+    /**
+     * Агуулах дахь байршил (А-1, Rack-3 гэх мэт)
+     */
+    location: string | null
     createdAt: Date
   }, ExtArgs["result"]["product"]>
   composites: {}
@@ -1683,6 +1842,9 @@ export interface ProductFieldRefs {
   readonly unitPrice: Prisma.FieldRef<"Product", 'Float'>
   readonly reorderLevel: Prisma.FieldRef<"Product", 'Float'>
   readonly isPerishable: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly imageUrl: Prisma.FieldRef<"Product", 'String'>
+  readonly barcode: Prisma.FieldRef<"Product", 'String'>
+  readonly location: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
 }
     

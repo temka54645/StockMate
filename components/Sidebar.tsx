@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Package, PackagePlus, PackageMinus,
-  BarChart3, Bell, Settings, Warehouse, LogOut, Menu, X
+  BarChart3, Bell, Settings, LogOut, Menu, X
 } from "lucide-react";
 import { logoutAction } from "@/app/(auth)/actions";
 import { useState } from "react";
@@ -42,35 +42,28 @@ export default function Sidebar({
     <>
       {/* Mobile toggle */}
       <button
-        className="fixed top-4 left-4 z-50 lg:hidden rounded-xl p-2 bg-card shadow-lg border border-border"
+        className="fixed top-3.5 left-3.5 z-50 lg:hidden rounded-xl p-2 bg-card shadow-md border border-border"
         onClick={() => setOpen((v) => !v)}
-        aria-label="Цэс нэмэх/хасах"
+        aria-label="Цэс"
       >
-        {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
       </button>
 
-      {/* Overlay */}
+      {/* Mobile overlay */}
       {open && (
-        <div
-          className="fixed inset-0 bg-black/30 z-40 lg:hidden"
-          onClick={() => setOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/30 z-40 lg:hidden" onClick={() => setOpen(false)} />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-card border-r border-border flex flex-col z-40 transition-transform duration-200
+        className={`fixed top-0 left-0 h-full w-60 bg-card border-r border-border flex flex-col z-40 transition-transform duration-200
           ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}
       >
-        {/* Logo */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-border">
-          <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <Warehouse className="w-5 h-5 text-primary" />
-          </div>
-          <div>
-            <p className="font-bold text-sm text-foreground">StoreMate</p>
-            <p className="text-xs text-muted-foreground">Агуулахын систем</p>
-          </div>
+        {/* App brand — жижиг, дискретний */}
+        <div className="px-5 pt-5 pb-1">
+          <span className="text-xs font-bold tracking-widest text-muted-foreground/60 uppercase">
+            StoreMate
+          </span>
         </div>
 
         {/* Warehouse switcher */}
@@ -81,8 +74,11 @@ export default function Sidebar({
           />
         )}
 
+        {/* Хуваагч */}
+        <div className="mx-4 my-1 border-t border-border" />
+
         {/* Nav */}
-        <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
+        <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto">
           {nav.map(({ href, icon: Icon, label }) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
             return (
@@ -109,7 +105,7 @@ export default function Sidebar({
         </nav>
 
         {/* Logout */}
-        <div className="px-3 py-4 border-t border-border">
+        <div className="px-2 py-3 border-t border-border">
           <form action={logoutAction}>
             <button
               type="submit"

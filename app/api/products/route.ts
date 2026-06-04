@@ -6,11 +6,14 @@ import { z } from "zod";
 const productSchema = z.object({
   code: z.string().min(1, "Код шаардлагатай").max(50),
   name: z.string().min(1, "Нэр шаардлагатай").max(200),
-  unit: z.string().min(1).max(20).default("ш"),
+  unit: z.string().min(1).max(30).default("ш"),
   category: z.string().max(100).default("Ерөнхий"),
   unitPrice: z.number().min(0).default(0),
   reorderLevel: z.number().min(0).default(0),
   isPerishable: z.boolean().default(false),
+  imageUrl: z.string().nullable().optional(),
+  barcode: z.string().max(100).nullable().optional(),
+  location: z.string().max(100).nullable().optional(),
 });
 
 export async function GET(req: NextRequest) {
@@ -28,13 +31,12 @@ export async function GET(req: NextRequest) {
           OR: [
             { name: { contains: search, mode: "insensitive" } },
             { code: { contains: search, mode: "insensitive" } },
+            { barcode: { contains: search, mode: "insensitive" } },
           ],
         } : {}),
       },
       include: {
-        batches: {
-          select: { qtyIn: true, qtyOut: true, expiryDate: true },
-        },
+        batches: { select: { qtyIn: true, qtyOut: true, expiryDate: true } },
       },
       orderBy: { name: "asc" },
     });
@@ -57,7 +59,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const data = productSchema.parse(body);
 
-    // Код давхардлыг шалгана
     const existing = await prisma.product.findUnique({
       where: { warehouseId_code: { warehouseId, code: data.code } },
     });

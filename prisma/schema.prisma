@@ -95,6 +95,12 @@ model Product {
   reorderLevel Float    @default(0)
   /// true бол дуусах хугацааны хяналт хийгдэнэ
   isPerishable Boolean  @default(false)
+  /// Барааны зураг (base64 thumbnail эсвэл URL)
+  imageUrl     String?
+  /// Баркод / SKU
+  barcode      String?
+  /// Агуулах дахь байршил (А-1, Rack-3 гэх мэт)
+  location     String?
   createdAt    DateTime @default(now())
 
   warehouse     Warehouse      @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
