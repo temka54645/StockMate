@@ -65,10 +65,14 @@ model VerificationToken {
 // ── Агуулахын загвар ───────────────────────────────────────────────
 
 model Warehouse {
-  id        String   @id @default(cuid())
-  name      String
-  ownerId   String
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  name         String
+  ownerId      String
+  /// Нийт багтаамж (нэгжээр) — null бол тохируулаагүй
+  capacity     Float?
+  /// Багтаамжийн нэгж харуулах нэр (ш, кг, м³, паллет, ...)
+  capacityUnit String   @default("нэгж")
+  createdAt    DateTime @default(now())
 
   owner                User                 @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   products             Product[]

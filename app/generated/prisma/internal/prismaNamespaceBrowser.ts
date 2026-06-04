@@ -136,6 +136,8 @@ export const WarehouseScalarFieldEnum = {
   id: 'id',
   name: 'name',
   ownerId: 'ownerId',
+  capacity: 'capacity',
+  capacityUnit: 'capacityUnit',
   createdAt: 'createdAt'
 } as const
 

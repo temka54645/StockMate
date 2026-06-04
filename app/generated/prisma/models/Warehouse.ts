@@ -20,14 +20,26 @@ export type WarehouseModel = runtime.Types.Result.DefaultSelection<Prisma.$Wareh
 
 export type AggregateWarehouse = {
   _count: WarehouseCountAggregateOutputType | null
+  _avg: WarehouseAvgAggregateOutputType | null
+  _sum: WarehouseSumAggregateOutputType | null
   _min: WarehouseMinAggregateOutputType | null
   _max: WarehouseMaxAggregateOutputType | null
+}
+
+export type WarehouseAvgAggregateOutputType = {
+  capacity: number | null
+}
+
+export type WarehouseSumAggregateOutputType = {
+  capacity: number | null
 }
 
 export type WarehouseMinAggregateOutputType = {
   id: string | null
   name: string | null
   ownerId: string | null
+  capacity: number | null
+  capacityUnit: string | null
   createdAt: Date | null
 }
 
@@ -35,6 +47,8 @@ export type WarehouseMaxAggregateOutputType = {
   id: string | null
   name: string | null
   ownerId: string | null
+  capacity: number | null
+  capacityUnit: string | null
   createdAt: Date | null
 }
 
@@ -42,15 +56,27 @@ export type WarehouseCountAggregateOutputType = {
   id: number
   name: number
   ownerId: number
+  capacity: number
+  capacityUnit: number
   createdAt: number
   _all: number
 }
 
 
+export type WarehouseAvgAggregateInputType = {
+  capacity?: true
+}
+
+export type WarehouseSumAggregateInputType = {
+  capacity?: true
+}
+
 export type WarehouseMinAggregateInputType = {
   id?: true
   name?: true
   ownerId?: true
+  capacity?: true
+  capacityUnit?: true
   createdAt?: true
 }
 
@@ -58,6 +84,8 @@ export type WarehouseMaxAggregateInputType = {
   id?: true
   name?: true
   ownerId?: true
+  capacity?: true
+  capacityUnit?: true
   createdAt?: true
 }
 
@@ -65,6 +93,8 @@ export type WarehouseCountAggregateInputType = {
   id?: true
   name?: true
   ownerId?: true
+  capacity?: true
+  capacityUnit?: true
   createdAt?: true
   _all?: true
 }
@@ -107,6 +137,18 @@ export type WarehouseAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: WarehouseAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: WarehouseSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: WarehouseMinAggregateInputType
@@ -137,6 +179,8 @@ export type WarehouseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: WarehouseCountAggregateInputType | true
+  _avg?: WarehouseAvgAggregateInputType
+  _sum?: WarehouseSumAggregateInputType
   _min?: WarehouseMinAggregateInputType
   _max?: WarehouseMaxAggregateInputType
 }
@@ -145,8 +189,12 @@ export type WarehouseGroupByOutputType = {
   id: string
   name: string
   ownerId: string
+  capacity: number | null
+  capacityUnit: string
   createdAt: Date
   _count: WarehouseCountAggregateOutputType | null
+  _avg: WarehouseAvgAggregateOutputType | null
+  _sum: WarehouseSumAggregateOutputType | null
   _min: WarehouseMinAggregateOutputType | null
   _max: WarehouseMaxAggregateOutputType | null
 }
@@ -173,6 +221,8 @@ export type WarehouseWhereInput = {
   id?: Prisma.StringFilter<"Warehouse"> | string
   name?: Prisma.StringFilter<"Warehouse"> | string
   ownerId?: Prisma.StringFilter<"Warehouse"> | string
+  capacity?: Prisma.FloatNullableFilter<"Warehouse"> | number | null
+  capacityUnit?: Prisma.StringFilter<"Warehouse"> | string
   createdAt?: Prisma.DateTimeFilter<"Warehouse"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   products?: Prisma.ProductListRelationFilter
@@ -187,6 +237,8 @@ export type WarehouseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  capacity?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacityUnit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
@@ -204,6 +256,8 @@ export type WarehouseWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.WarehouseWhereInput | Prisma.WarehouseWhereInput[]
   name?: Prisma.StringFilter<"Warehouse"> | string
   ownerId?: Prisma.StringFilter<"Warehouse"> | string
+  capacity?: Prisma.FloatNullableFilter<"Warehouse"> | number | null
+  capacityUnit?: Prisma.StringFilter<"Warehouse"> | string
   createdAt?: Prisma.DateTimeFilter<"Warehouse"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   products?: Prisma.ProductListRelationFilter
@@ -218,10 +272,14 @@ export type WarehouseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  capacity?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacityUnit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.WarehouseCountOrderByAggregateInput
+  _avg?: Prisma.WarehouseAvgOrderByAggregateInput
   _max?: Prisma.WarehouseMaxOrderByAggregateInput
   _min?: Prisma.WarehouseMinOrderByAggregateInput
+  _sum?: Prisma.WarehouseSumOrderByAggregateInput
 }
 
 export type WarehouseScalarWhereWithAggregatesInput = {
@@ -231,12 +289,16 @@ export type WarehouseScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Warehouse"> | string
   name?: Prisma.StringWithAggregatesFilter<"Warehouse"> | string
   ownerId?: Prisma.StringWithAggregatesFilter<"Warehouse"> | string
+  capacity?: Prisma.FloatNullableWithAggregatesFilter<"Warehouse"> | number | null
+  capacityUnit?: Prisma.StringWithAggregatesFilter<"Warehouse"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Warehouse"> | Date | string
 }
 
 export type WarehouseCreateInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -251,6 +313,8 @@ export type WarehouseUncheckedCreateInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -263,6 +327,8 @@ export type WarehouseUncheckedCreateInput = {
 export type WarehouseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -277,6 +343,8 @@ export type WarehouseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -290,12 +358,16 @@ export type WarehouseCreateManyInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
 }
 
 export type WarehouseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -303,6 +375,8 @@ export type WarehouseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -320,13 +394,21 @@ export type WarehouseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
+  capacityUnit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type WarehouseAvgOrderByAggregateInput = {
+  capacity?: Prisma.SortOrder
 }
 
 export type WarehouseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
+  capacityUnit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -334,7 +416,13 @@ export type WarehouseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
+  capacityUnit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type WarehouseSumOrderByAggregateInput = {
+  capacity?: Prisma.SortOrder
 }
 
 export type WarehouseScalarRelationFilter = {
@@ -382,6 +470,14 @@ export type WarehouseUncheckedUpdateManyWithoutOwnerNestedInput = {
   update?: Prisma.WarehouseUpdateWithWhereUniqueWithoutOwnerInput | Prisma.WarehouseUpdateWithWhereUniqueWithoutOwnerInput[]
   updateMany?: Prisma.WarehouseUpdateManyWithWhereWithoutOwnerInput | Prisma.WarehouseUpdateManyWithWhereWithoutOwnerInput[]
   deleteMany?: Prisma.WarehouseScalarWhereInput | Prisma.WarehouseScalarWhereInput[]
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type WarehouseCreateNestedOneWithoutProductsInput = {
@@ -471,6 +567,8 @@ export type WarehouseUpdateOneRequiredWithoutPushSubscriptionsNestedInput = {
 export type WarehouseCreateWithoutOwnerInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInCreateNestedManyWithoutWarehouseInput
@@ -483,6 +581,8 @@ export type WarehouseCreateWithoutOwnerInput = {
 export type WarehouseUncheckedCreateWithoutOwnerInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -525,12 +625,16 @@ export type WarehouseScalarWhereInput = {
   id?: Prisma.StringFilter<"Warehouse"> | string
   name?: Prisma.StringFilter<"Warehouse"> | string
   ownerId?: Prisma.StringFilter<"Warehouse"> | string
+  capacity?: Prisma.FloatNullableFilter<"Warehouse"> | number | null
+  capacityUnit?: Prisma.StringFilter<"Warehouse"> | string
   createdAt?: Prisma.DateTimeFilter<"Warehouse"> | Date | string
 }
 
 export type WarehouseCreateWithoutProductsInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   stockIns?: Prisma.StockInCreateNestedManyWithoutWarehouseInput
@@ -544,6 +648,8 @@ export type WarehouseUncheckedCreateWithoutProductsInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
@@ -571,6 +677,8 @@ export type WarehouseUpdateToOneWithWhereWithoutProductsInput = {
 export type WarehouseUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   stockIns?: Prisma.StockInUpdateManyWithoutWarehouseNestedInput
@@ -584,6 +692,8 @@ export type WarehouseUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -595,6 +705,8 @@ export type WarehouseUncheckedUpdateWithoutProductsInput = {
 export type WarehouseCreateWithoutStockInsInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -608,6 +720,8 @@ export type WarehouseUncheckedCreateWithoutStockInsInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
@@ -635,6 +749,8 @@ export type WarehouseUpdateToOneWithWhereWithoutStockInsInput = {
 export type WarehouseUpdateWithoutStockInsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -648,6 +764,8 @@ export type WarehouseUncheckedUpdateWithoutStockInsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -659,6 +777,8 @@ export type WarehouseUncheckedUpdateWithoutStockInsInput = {
 export type WarehouseCreateWithoutStockOutsInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -672,6 +792,8 @@ export type WarehouseUncheckedCreateWithoutStockOutsInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -699,6 +821,8 @@ export type WarehouseUpdateToOneWithWhereWithoutStockOutsInput = {
 export type WarehouseUpdateWithoutStockOutsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -712,6 +836,8 @@ export type WarehouseUncheckedUpdateWithoutStockOutsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -723,6 +849,8 @@ export type WarehouseUncheckedUpdateWithoutStockOutsInput = {
 export type WarehouseCreateWithoutNotificationSettingInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -736,6 +864,8 @@ export type WarehouseUncheckedCreateWithoutNotificationSettingInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -763,6 +893,8 @@ export type WarehouseUpdateToOneWithWhereWithoutNotificationSettingInput = {
 export type WarehouseUpdateWithoutNotificationSettingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -776,6 +908,8 @@ export type WarehouseUncheckedUpdateWithoutNotificationSettingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -787,6 +921,8 @@ export type WarehouseUncheckedUpdateWithoutNotificationSettingInput = {
 export type WarehouseCreateWithoutNotificationsInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -800,6 +936,8 @@ export type WarehouseUncheckedCreateWithoutNotificationsInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -827,6 +965,8 @@ export type WarehouseUpdateToOneWithWhereWithoutNotificationsInput = {
 export type WarehouseUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -840,6 +980,8 @@ export type WarehouseUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -851,6 +993,8 @@ export type WarehouseUncheckedUpdateWithoutNotificationsInput = {
 export type WarehouseCreateWithoutPushSubscriptionsInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
   products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
@@ -864,6 +1008,8 @@ export type WarehouseUncheckedCreateWithoutPushSubscriptionsInput = {
   id?: string
   name: string
   ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
   stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
@@ -891,6 +1037,8 @@ export type WarehouseUpdateToOneWithWhereWithoutPushSubscriptionsInput = {
 export type WarehouseUpdateWithoutPushSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
@@ -904,6 +1052,8 @@ export type WarehouseUncheckedUpdateWithoutPushSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -915,12 +1065,16 @@ export type WarehouseUncheckedUpdateWithoutPushSubscriptionsInput = {
 export type WarehouseCreateManyOwnerInput = {
   id?: string
   name: string
+  capacity?: number | null
+  capacityUnit?: string
   createdAt?: Date | string
 }
 
 export type WarehouseUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUpdateManyWithoutWarehouseNestedInput
@@ -933,6 +1087,8 @@ export type WarehouseUpdateWithoutOwnerInput = {
 export type WarehouseUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
   stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
@@ -945,6 +1101,8 @@ export type WarehouseUncheckedUpdateWithoutOwnerInput = {
 export type WarehouseUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1019,6 +1177,8 @@ export type WarehouseSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   name?: boolean
   ownerId?: boolean
+  capacity?: boolean
+  capacityUnit?: boolean
   createdAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Warehouse$productsArgs<ExtArgs>
@@ -1034,6 +1194,8 @@ export type WarehouseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   name?: boolean
   ownerId?: boolean
+  capacity?: boolean
+  capacityUnit?: boolean
   createdAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["warehouse"]>
@@ -1042,6 +1204,8 @@ export type WarehouseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   name?: boolean
   ownerId?: boolean
+  capacity?: boolean
+  capacityUnit?: boolean
   createdAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["warehouse"]>
@@ -1050,10 +1214,12 @@ export type WarehouseSelectScalar = {
   id?: boolean
   name?: boolean
   ownerId?: boolean
+  capacity?: boolean
+  capacityUnit?: boolean
   createdAt?: boolean
 }
 
-export type WarehouseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "ownerId" | "createdAt", ExtArgs["result"]["warehouse"]>
+export type WarehouseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "ownerId" | "capacity" | "capacityUnit" | "createdAt", ExtArgs["result"]["warehouse"]>
 export type WarehouseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   products?: boolean | Prisma.Warehouse$productsArgs<ExtArgs>
@@ -1086,6 +1252,14 @@ export type $WarehousePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     name: string
     ownerId: string
+    /**
+     * Нийт багтаамж (нэгжээр) — null бол тохируулаагүй
+     */
+    capacity: number | null
+    /**
+     * Багтаамжийн нэгж харуулах нэр (ш, кг, м³, паллет, ...)
+     */
+    capacityUnit: string
     createdAt: Date
   }, ExtArgs["result"]["warehouse"]>
   composites: {}
@@ -1520,6 +1694,8 @@ export interface WarehouseFieldRefs {
   readonly id: Prisma.FieldRef<"Warehouse", 'String'>
   readonly name: Prisma.FieldRef<"Warehouse", 'String'>
   readonly ownerId: Prisma.FieldRef<"Warehouse", 'String'>
+  readonly capacity: Prisma.FieldRef<"Warehouse", 'Float'>
+  readonly capacityUnit: Prisma.FieldRef<"Warehouse", 'String'>
   readonly createdAt: Prisma.FieldRef<"Warehouse", 'DateTime'>
 }
     
