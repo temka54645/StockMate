@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Plus, Pencil, Trash2, Search, Package, AlertTriangle, X, Loader2 } from "lucide-react";
 
 interface Product {
@@ -30,11 +31,21 @@ export default function ProductsClient() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  // Modal нээлттэй үед body scroll хаах
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [modal]);
+
   const load = () => {
     setLoading(true);
     fetch(`/api/products${search ? `?q=${encodeURIComponent(search)}` : ""}`)
       .then((r) => r.json())
-      .then((d) => { setProducts(d); setLoading(false); });
+      .then((d) => { setProducts(Array.isArray(d) ? d : []); setLoading(false); });
   };
 
   useEffect(() => { load(); }, [search]);
@@ -52,6 +63,12 @@ export default function ProductsClient() {
     setModal("edit");
   }
 
+  function closeModal() {
+    setModal(null);
+    setEditing(null);
+    setError("");
+  }
+
   async function save() {
     setSaving(true);
     setError("");
@@ -64,7 +81,7 @@ export default function ProductsClient() {
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error ?? "Алдаа гарлаа"); setSaving(false); return; }
-    setModal(null);
+    closeModal();
     setSaving(false);
     load();
   }
@@ -78,9 +95,9 @@ export default function ProductsClient() {
   }
 
   const stockColor = (p: Product) => {
-    if (p.totalStock <= 0) return "text-rose-600 bg-rose-50";
-    if (p.reorderLevel > 0 && p.totalStock <= p.reorderLevel) return "text-orange-600 bg-orange-50";
-    return "text-emerald-600 bg-emerald-50";
+    if (p.totalStock <= 0) return "text-rose-600 bg-rose-50 dark:bg-rose-950/40";
+    if (p.reorderLevel > 0 && p.totalStock <= p.reorderLevel) return "text-orange-600 bg-orange-50 dark:bg-orange-950/40";
+    return "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40";
   };
 
   return (
@@ -120,6 +137,9 @@ export default function ProductsClient() {
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
             <Package className="w-10 h-10 mb-3 opacity-40" />
             <p className="text-sm">Бараа бүртгэлгүй байна</p>
+            <button onClick={openAdd} className="mt-3 text-xs text-primary underline underline-offset-2">
+              Эхний бараа нэмэх
+            </button>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -136,12 +156,14 @@ export default function ProductsClient() {
               </thead>
               <tbody>
                 {products.map((p) => (
-                  <tr key={p.id} className="border-b border-border hover:bg-muted/20 transition-colors">
+                  <tr key={p.id} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
                     <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{p.code}</td>
                     <td className="px-4 py-3">
                       <span className="font-medium text-foreground">{p.name}</span>
                       {p.isPerishable && (
-                        <span className="ml-2 text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full">хугацаатай</span>
+                        <span className="ml-2 text-[10px] bg-orange-100 dark:bg-orange-950/40 text-orange-700 px-1.5 py-0.5 rounded-full">
+                          хугацаатай
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground">{p.category}</td>
@@ -172,13 +194,16 @@ export default function ProductsClient() {
         )}
       </div>
 
-      {/* Modal */}
-      {modal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      {/* Modal — createPortal-аар body-д render хийнэ (navbar давхардалт засна) */}
+      {modal && createPortal(
+        <div
+          className="fixed inset-0 bg-black/50 z-[200] flex items-center justify-center p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+        >
           <div className="w-full max-w-lg bg-card rounded-2xl shadow-2xl border border-border animate-pop-in">
             <div className="flex items-center justify-between px-6 py-4 border-b border-border">
               <h2 className="font-bold text-foreground">{modal === "add" ? "Бараа нэмэх" : "Бараа засах"}</h2>
-              <button onClick={() => setModal(null)} className="p-1.5 rounded-lg hover:bg-accent transition">
+              <button onClick={closeModal} className="p-1.5 rounded-lg hover:bg-accent transition">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -187,54 +212,84 @@ export default function ProductsClient() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground block mb-1">Код *</label>
-                  <input value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  <input
+                    value={form.code}
+                    onChange={(e) => setForm({ ...form, code: e.target.value })}
                     disabled={modal === "edit"}
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring disabled:opacity-60" />
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring disabled:opacity-60"
+                  />
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground block mb-1">Нэгж</label>
-                  <input value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })}
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+                  <input
+                    value={form.unit}
+                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                  />
                 </div>
               </div>
               <div>
                 <label className="text-xs font-semibold text-muted-foreground block mb-1">Нэр *</label>
-                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+                <input
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground block mb-1">Ангилал</label>
-                  <input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+                  <input
+                    value={form.category}
+                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                  />
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground block mb-1">Нэгж үнэ (₮)</label>
-                  <input type="number" min={0} value={form.unitPrice} onChange={(e) => setForm({ ...form, unitPrice: Number(e.target.value) })}
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+                  <input
+                    type="number" min={0}
+                    value={form.unitPrice}
+                    onChange={(e) => setForm({ ...form, unitPrice: Number(e.target.value) })}
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                  />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-muted-foreground block mb-1">Доод хязгаар</label>
-                <input type="number" min={0} value={form.reorderLevel} onChange={(e) => setForm({ ...form, reorderLevel: Number(e.target.value) })}
-                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+                <label className="text-xs font-semibold text-muted-foreground block mb-1">Доод хязгаар (дахин захиалах)</label>
+                <input
+                  type="number" min={0}
+                  value={form.reorderLevel}
+                  onChange={(e) => setForm({ ...form, reorderLevel: Number(e.target.value) })}
+                  className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                />
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={form.isPerishable} onChange={(e) => setForm({ ...form, isPerishable: e.target.checked })}
-                  className="rounded" />
+                <input
+                  type="checkbox"
+                  checked={form.isPerishable}
+                  onChange={(e) => setForm({ ...form, isPerishable: e.target.checked })}
+                  className="rounded"
+                />
                 <span className="text-sm text-foreground">Дуусах хугацаатай бараа</span>
               </label>
             </div>
             <div className="flex justify-end gap-3 px-6 pb-6">
-              <button onClick={() => setModal(null)} className="px-4 py-2 rounded-lg border border-border text-sm hover:bg-accent transition">Болих</button>
-              <button onClick={save} disabled={saving}
-                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition disabled:opacity-60 flex items-center gap-2">
+              <button onClick={closeModal} className="px-4 py-2 rounded-lg border border-border text-sm hover:bg-accent transition">
+                Болих
+              </button>
+              <button
+                onClick={save}
+                disabled={saving}
+                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition disabled:opacity-60 flex items-center gap-2"
+              >
                 {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 Хадгалах
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

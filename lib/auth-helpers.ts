@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export class UnauthorizedError extends Error {
   status = 401;
@@ -13,25 +14,42 @@ export async function requireUserId(): Promise<string> {
   return session.user.id;
 }
 
-/** API route-д хэрэглэгчийн анхны агуулахын ID-г буцаана. Агуулах байхгүй бол автоматаар үүсгэнэ. */
-export async function requireWarehouseId(): Promise<{ userId: string; warehouseId: string }> {
-  const userId = await requireUserId();
+/** Cookie дотрх active-wh-г уншиж, эзэмшил баталгаажуулж warehouseId буцаана */
+async function resolveWarehouseId(userId: string): Promise<string> {
+  const jar = await cookies();
+  const activeWh = jar.get("active-wh")?.value;
 
-  let warehouse = await prisma.warehouse.findFirst({
-    where: { ownerId: userId },
-    orderBy: { createdAt: "asc" },
-  });
+  let warehouse = null;
 
-  if (!warehouse) {
-    warehouse = await prisma.warehouse.create({
-      data: { name: "Миний агуулах", ownerId: userId },
-    });
-    await prisma.notificationSetting.create({
-      data: { warehouseId: warehouse.id },
+  if (activeWh) {
+    warehouse = await prisma.warehouse.findFirst({
+      where: { id: activeWh, ownerId: userId },
     });
   }
 
-  return { userId, warehouseId: warehouse.id };
+  if (!warehouse) {
+    warehouse = await prisma.warehouse.findFirst({
+      where: { ownerId: userId },
+      orderBy: { createdAt: "asc" },
+    });
+  }
+
+  if (!warehouse) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } });
+    warehouse = await prisma.warehouse.create({
+      data: { name: `${user?.name ?? "Миний"} агуулах`, ownerId: userId },
+    });
+    await prisma.notificationSetting.create({ data: { warehouseId: warehouse.id } });
+  }
+
+  return warehouse.id;
+}
+
+/** API route-д хэрэглэнэ */
+export async function requireWarehouseId(): Promise<{ userId: string; warehouseId: string }> {
+  const userId = await requireUserId();
+  const warehouseId = await resolveWarehouseId(userId);
+  return { userId, warehouseId };
 }
 
 /** Page/layout-д хэрэглэнэ — нэвтрээгүй бол /login руу */
@@ -47,22 +65,7 @@ export async function redirectIfAuthenticated(): Promise<void> {
   if (session?.user?.id) redirect("/");
 }
 
-/** Хэрэглэгчийн агуулахыг баталгаажуулна — page-аас дуудаж warehouseId авна */
+/** Layout-аас дуудах — cookie-д тулгуурлан warehouseId + warehouses list буцаана */
 export async function getOrCreateWarehouse(userId: string): Promise<string> {
-  let warehouse = await prisma.warehouse.findFirst({
-    where: { ownerId: userId },
-    orderBy: { createdAt: "asc" },
-  });
-
-  if (!warehouse) {
-    const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } });
-    warehouse = await prisma.warehouse.create({
-      data: { name: `${user?.name ?? "Миний"} агуулах`, ownerId: userId },
-    });
-    await prisma.notificationSetting.create({
-      data: { warehouseId: warehouse.id },
-    });
-  }
-
-  return warehouse.id;
+  return resolveWarehouseId(userId);
 }

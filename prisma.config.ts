@@ -1,4 +1,7 @@
-import "dotenv/config";
+import { config } from "dotenv";
+// .env.local → .env дарааллаар уншина
+config({ path: ".env.local" });
+config({ path: ".env" });
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({

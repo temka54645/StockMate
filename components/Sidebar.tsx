@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { logoutAction } from "@/app/(auth)/actions";
 import { useState } from "react";
+import WarehouseSwitcher from "./WarehouseSwitcher";
 
 const nav = [
   { href: "/", icon: LayoutDashboard, label: "Хяналтын самбар" },
@@ -19,7 +20,21 @@ const nav = [
   { href: "/settings", icon: Settings, label: "Тохиргоо" },
 ];
 
-export default function Sidebar({ unreadCount = 0 }: { unreadCount?: number }) {
+interface WarehouseOption {
+  id: string;
+  name: string;
+  productCount: number;
+}
+
+export default function Sidebar({
+  unreadCount = 0,
+  warehouses = [],
+  activeWarehouseId = "",
+}: {
+  unreadCount?: number;
+  warehouses?: WarehouseOption[];
+  activeWarehouseId?: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -53,10 +68,18 @@ export default function Sidebar({ unreadCount = 0 }: { unreadCount?: number }) {
             <Warehouse className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <p className="font-bold text-sm text-foreground">Агуулах</p>
-            <p className="text-xs text-muted-foreground">Удирдлагын систем</p>
+            <p className="font-bold text-sm text-foreground">StoreMate</p>
+            <p className="text-xs text-muted-foreground">Агуулахын систем</p>
           </div>
         </div>
+
+        {/* Warehouse switcher */}
+        {warehouses.length > 0 && (
+          <WarehouseSwitcher
+            warehouses={warehouses}
+            activeWarehouseId={activeWarehouseId}
+          />
+        )}
 
         {/* Nav */}
         <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
