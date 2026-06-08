@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 const stockInSchema = z.object({
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { warehouseId, userId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const body = await req.json();
     const data = stockInSchema.parse(body);
 
@@ -105,6 +106,16 @@ export async function POST(req: NextRequest) {
           batch: { select: { batchNo: true, expiryDate: true } },
         },
       });
+    });
+
+    writeLog({
+      warehouseId,
+      userId,
+      userName,
+      action: "STOCK_IN",
+      entityName: product.name,
+      qty: data.qty,
+      details: JSON.stringify({ supplier: data.supplier, docNo: data.docNo, batchNo: data.batchNo }),
     });
 
     return Response.json(stockIn, { status: 201 });

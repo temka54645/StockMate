@@ -231,6 +231,8 @@ export type WarehouseWhereInput = {
   notificationSetting?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
   notifications?: Prisma.NotificationListRelationFilter
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
+  staffMembers?: Prisma.StaffMemberListRelationFilter
+  logs?: Prisma.WarehouseLogListRelationFilter
 }
 
 export type WarehouseOrderByWithRelationInput = {
@@ -247,6 +249,8 @@ export type WarehouseOrderByWithRelationInput = {
   notificationSetting?: Prisma.NotificationSettingOrderByWithRelationInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.PushSubscriptionOrderByRelationAggregateInput
+  staffMembers?: Prisma.StaffMemberOrderByRelationAggregateInput
+  logs?: Prisma.WarehouseLogOrderByRelationAggregateInput
 }
 
 export type WarehouseWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +270,8 @@ export type WarehouseWhereUniqueInput = Prisma.AtLeast<{
   notificationSetting?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
   notifications?: Prisma.NotificationListRelationFilter
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
+  staffMembers?: Prisma.StaffMemberListRelationFilter
+  logs?: Prisma.WarehouseLogListRelationFilter
 }, "id">
 
 export type WarehouseOrderByWithAggregationInput = {
@@ -307,6 +313,8 @@ export type WarehouseCreateInput = {
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateInput = {
@@ -322,6 +330,8 @@ export type WarehouseUncheckedCreateInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUpdateInput = {
@@ -337,6 +347,8 @@ export type WarehouseUpdateInput = {
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateInput = {
@@ -352,6 +364,8 @@ export type WarehouseUncheckedUpdateInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateManyInput = {
@@ -550,6 +564,34 @@ export type WarehouseUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WarehouseUpdateToOneWithWhereWithoutNotificationsInput, Prisma.WarehouseUpdateWithoutNotificationsInput>, Prisma.WarehouseUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type WarehouseCreateNestedOneWithoutStaffMembersInput = {
+  create?: Prisma.XOR<Prisma.WarehouseCreateWithoutStaffMembersInput, Prisma.WarehouseUncheckedCreateWithoutStaffMembersInput>
+  connectOrCreate?: Prisma.WarehouseCreateOrConnectWithoutStaffMembersInput
+  connect?: Prisma.WarehouseWhereUniqueInput
+}
+
+export type WarehouseUpdateOneRequiredWithoutStaffMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.WarehouseCreateWithoutStaffMembersInput, Prisma.WarehouseUncheckedCreateWithoutStaffMembersInput>
+  connectOrCreate?: Prisma.WarehouseCreateOrConnectWithoutStaffMembersInput
+  upsert?: Prisma.WarehouseUpsertWithoutStaffMembersInput
+  connect?: Prisma.WarehouseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WarehouseUpdateToOneWithWhereWithoutStaffMembersInput, Prisma.WarehouseUpdateWithoutStaffMembersInput>, Prisma.WarehouseUncheckedUpdateWithoutStaffMembersInput>
+}
+
+export type WarehouseCreateNestedOneWithoutLogsInput = {
+  create?: Prisma.XOR<Prisma.WarehouseCreateWithoutLogsInput, Prisma.WarehouseUncheckedCreateWithoutLogsInput>
+  connectOrCreate?: Prisma.WarehouseCreateOrConnectWithoutLogsInput
+  connect?: Prisma.WarehouseWhereUniqueInput
+}
+
+export type WarehouseUpdateOneRequiredWithoutLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.WarehouseCreateWithoutLogsInput, Prisma.WarehouseUncheckedCreateWithoutLogsInput>
+  connectOrCreate?: Prisma.WarehouseCreateOrConnectWithoutLogsInput
+  upsert?: Prisma.WarehouseUpsertWithoutLogsInput
+  connect?: Prisma.WarehouseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WarehouseUpdateToOneWithWhereWithoutLogsInput, Prisma.WarehouseUpdateWithoutLogsInput>, Prisma.WarehouseUncheckedUpdateWithoutLogsInput>
+}
+
 export type WarehouseCreateNestedOneWithoutPushSubscriptionsInput = {
   create?: Prisma.XOR<Prisma.WarehouseCreateWithoutPushSubscriptionsInput, Prisma.WarehouseUncheckedCreateWithoutPushSubscriptionsInput>
   connectOrCreate?: Prisma.WarehouseCreateOrConnectWithoutPushSubscriptionsInput
@@ -576,6 +618,8 @@ export type WarehouseCreateWithoutOwnerInput = {
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutOwnerInput = {
@@ -590,6 +634,8 @@ export type WarehouseUncheckedCreateWithoutOwnerInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutOwnerInput = {
@@ -642,6 +688,8 @@ export type WarehouseCreateWithoutProductsInput = {
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutProductsInput = {
@@ -656,6 +704,8 @@ export type WarehouseUncheckedCreateWithoutProductsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutProductsInput = {
@@ -686,6 +736,8 @@ export type WarehouseUpdateWithoutProductsInput = {
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutProductsInput = {
@@ -700,6 +752,8 @@ export type WarehouseUncheckedUpdateWithoutProductsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateWithoutStockInsInput = {
@@ -714,6 +768,8 @@ export type WarehouseCreateWithoutStockInsInput = {
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutStockInsInput = {
@@ -728,6 +784,8 @@ export type WarehouseUncheckedCreateWithoutStockInsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutStockInsInput = {
@@ -758,6 +816,8 @@ export type WarehouseUpdateWithoutStockInsInput = {
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutStockInsInput = {
@@ -772,6 +832,8 @@ export type WarehouseUncheckedUpdateWithoutStockInsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateWithoutStockOutsInput = {
@@ -786,6 +848,8 @@ export type WarehouseCreateWithoutStockOutsInput = {
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutStockOutsInput = {
@@ -800,6 +864,8 @@ export type WarehouseUncheckedCreateWithoutStockOutsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutStockOutsInput = {
@@ -830,6 +896,8 @@ export type WarehouseUpdateWithoutStockOutsInput = {
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutStockOutsInput = {
@@ -844,6 +912,8 @@ export type WarehouseUncheckedUpdateWithoutStockOutsInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateWithoutNotificationSettingInput = {
@@ -858,6 +928,8 @@ export type WarehouseCreateWithoutNotificationSettingInput = {
   stockOuts?: Prisma.StockOutCreateNestedManyWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutNotificationSettingInput = {
@@ -872,6 +944,8 @@ export type WarehouseUncheckedCreateWithoutNotificationSettingInput = {
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutNotificationSettingInput = {
@@ -902,6 +976,8 @@ export type WarehouseUpdateWithoutNotificationSettingInput = {
   stockOuts?: Prisma.StockOutUpdateManyWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutNotificationSettingInput = {
@@ -916,6 +992,8 @@ export type WarehouseUncheckedUpdateWithoutNotificationSettingInput = {
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateWithoutNotificationsInput = {
@@ -930,6 +1008,8 @@ export type WarehouseCreateWithoutNotificationsInput = {
   stockOuts?: Prisma.StockOutCreateNestedManyWithoutWarehouseInput
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutNotificationsInput = {
@@ -944,6 +1024,8 @@ export type WarehouseUncheckedCreateWithoutNotificationsInput = {
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutNotificationsInput = {
@@ -974,6 +1056,8 @@ export type WarehouseUpdateWithoutNotificationsInput = {
   stockOuts?: Prisma.StockOutUpdateManyWithoutWarehouseNestedInput
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutNotificationsInput = {
@@ -988,6 +1072,168 @@ export type WarehouseUncheckedUpdateWithoutNotificationsInput = {
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
+}
+
+export type WarehouseCreateWithoutStaffMembersInput = {
+  id?: string
+  name: string
+  capacity?: number | null
+  capacityUnit?: string
+  createdAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
+  products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutWarehouseInput
+  stockOuts?: Prisma.StockOutCreateNestedManyWithoutWarehouseInput
+  notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
+}
+
+export type WarehouseUncheckedCreateWithoutStaffMembersInput = {
+  id?: string
+  name: string
+  ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
+  stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
+  notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
+}
+
+export type WarehouseCreateOrConnectWithoutStaffMembersInput = {
+  where: Prisma.WarehouseWhereUniqueInput
+  create: Prisma.XOR<Prisma.WarehouseCreateWithoutStaffMembersInput, Prisma.WarehouseUncheckedCreateWithoutStaffMembersInput>
+}
+
+export type WarehouseUpsertWithoutStaffMembersInput = {
+  update: Prisma.XOR<Prisma.WarehouseUpdateWithoutStaffMembersInput, Prisma.WarehouseUncheckedUpdateWithoutStaffMembersInput>
+  create: Prisma.XOR<Prisma.WarehouseCreateWithoutStaffMembersInput, Prisma.WarehouseUncheckedCreateWithoutStaffMembersInput>
+  where?: Prisma.WarehouseWhereInput
+}
+
+export type WarehouseUpdateToOneWithWhereWithoutStaffMembersInput = {
+  where?: Prisma.WarehouseWhereInput
+  data: Prisma.XOR<Prisma.WarehouseUpdateWithoutStaffMembersInput, Prisma.WarehouseUncheckedUpdateWithoutStaffMembersInput>
+}
+
+export type WarehouseUpdateWithoutStaffMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutWarehouseNestedInput
+  stockOuts?: Prisma.StockOutUpdateManyWithoutWarehouseNestedInput
+  notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
+}
+
+export type WarehouseUncheckedUpdateWithoutStaffMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
+  stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
+  notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
+}
+
+export type WarehouseCreateWithoutLogsInput = {
+  id?: string
+  name: string
+  capacity?: number | null
+  capacityUnit?: string
+  createdAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutWarehousesInput
+  products?: Prisma.ProductCreateNestedManyWithoutWarehouseInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutWarehouseInput
+  stockOuts?: Prisma.StockOutCreateNestedManyWithoutWarehouseInput
+  notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+}
+
+export type WarehouseUncheckedCreateWithoutLogsInput = {
+  id?: string
+  name: string
+  ownerId: string
+  capacity?: number | null
+  capacityUnit?: string
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWarehouseInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutWarehouseInput
+  stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
+  notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+}
+
+export type WarehouseCreateOrConnectWithoutLogsInput = {
+  where: Prisma.WarehouseWhereUniqueInput
+  create: Prisma.XOR<Prisma.WarehouseCreateWithoutLogsInput, Prisma.WarehouseUncheckedCreateWithoutLogsInput>
+}
+
+export type WarehouseUpsertWithoutLogsInput = {
+  update: Prisma.XOR<Prisma.WarehouseUpdateWithoutLogsInput, Prisma.WarehouseUncheckedUpdateWithoutLogsInput>
+  create: Prisma.XOR<Prisma.WarehouseCreateWithoutLogsInput, Prisma.WarehouseUncheckedCreateWithoutLogsInput>
+  where?: Prisma.WarehouseWhereInput
+}
+
+export type WarehouseUpdateToOneWithWhereWithoutLogsInput = {
+  where?: Prisma.WarehouseWhereInput
+  data: Prisma.XOR<Prisma.WarehouseUpdateWithoutLogsInput, Prisma.WarehouseUncheckedUpdateWithoutLogsInput>
+}
+
+export type WarehouseUpdateWithoutLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutWarehousesNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWarehouseNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutWarehouseNestedInput
+  stockOuts?: Prisma.StockOutUpdateManyWithoutWarehouseNestedInput
+  notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+}
+
+export type WarehouseUncheckedUpdateWithoutLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  capacityUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWarehouseNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutWarehouseNestedInput
+  stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
+  notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateWithoutPushSubscriptionsInput = {
@@ -1002,6 +1248,8 @@ export type WarehouseCreateWithoutPushSubscriptionsInput = {
   stockOuts?: Prisma.StockOutCreateNestedManyWithoutWarehouseInput
   notificationSetting?: Prisma.NotificationSettingCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1016,6 +1264,8 @@ export type WarehouseUncheckedCreateWithoutPushSubscriptionsInput = {
   stockOuts?: Prisma.StockOutUncheckedCreateNestedManyWithoutWarehouseInput
   notificationSetting?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutWarehouseInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutWarehouseInput
+  staffMembers?: Prisma.StaffMemberUncheckedCreateNestedManyWithoutWarehouseInput
+  logs?: Prisma.WarehouseLogUncheckedCreateNestedManyWithoutWarehouseInput
 }
 
 export type WarehouseCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1046,6 +1296,8 @@ export type WarehouseUpdateWithoutPushSubscriptionsInput = {
   stockOuts?: Prisma.StockOutUpdateManyWithoutWarehouseNestedInput
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1060,6 +1312,8 @@ export type WarehouseUncheckedUpdateWithoutPushSubscriptionsInput = {
   stockOuts?: Prisma.StockOutUncheckedUpdateManyWithoutWarehouseNestedInput
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseCreateManyOwnerInput = {
@@ -1082,6 +1336,8 @@ export type WarehouseUpdateWithoutOwnerInput = {
   notificationSetting?: Prisma.NotificationSettingUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateWithoutOwnerInput = {
@@ -1096,6 +1352,8 @@ export type WarehouseUncheckedUpdateWithoutOwnerInput = {
   notificationSetting?: Prisma.NotificationSettingUncheckedUpdateOneWithoutWarehouseNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutWarehouseNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutWarehouseNestedInput
+  staffMembers?: Prisma.StaffMemberUncheckedUpdateManyWithoutWarehouseNestedInput
+  logs?: Prisma.WarehouseLogUncheckedUpdateManyWithoutWarehouseNestedInput
 }
 
 export type WarehouseUncheckedUpdateManyWithoutOwnerInput = {
@@ -1117,6 +1375,8 @@ export type WarehouseCountOutputType = {
   stockOuts: number
   notifications: number
   pushSubscriptions: number
+  staffMembers: number
+  logs: number
 }
 
 export type WarehouseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1125,6 +1385,8 @@ export type WarehouseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensi
   stockOuts?: boolean | WarehouseCountOutputTypeCountStockOutsArgs
   notifications?: boolean | WarehouseCountOutputTypeCountNotificationsArgs
   pushSubscriptions?: boolean | WarehouseCountOutputTypeCountPushSubscriptionsArgs
+  staffMembers?: boolean | WarehouseCountOutputTypeCountStaffMembersArgs
+  logs?: boolean | WarehouseCountOutputTypeCountLogsArgs
 }
 
 /**
@@ -1172,6 +1434,20 @@ export type WarehouseCountOutputTypeCountPushSubscriptionsArgs<ExtArgs extends r
   where?: Prisma.PushSubscriptionWhereInput
 }
 
+/**
+ * WarehouseCountOutputType without action
+ */
+export type WarehouseCountOutputTypeCountStaffMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StaffMemberWhereInput
+}
+
+/**
+ * WarehouseCountOutputType without action
+ */
+export type WarehouseCountOutputTypeCountLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WarehouseLogWhereInput
+}
+
 
 export type WarehouseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1187,6 +1463,8 @@ export type WarehouseSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   notificationSetting?: boolean | Prisma.Warehouse$notificationSettingArgs<ExtArgs>
   notifications?: boolean | Prisma.Warehouse$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.Warehouse$pushSubscriptionsArgs<ExtArgs>
+  staffMembers?: boolean | Prisma.Warehouse$staffMembersArgs<ExtArgs>
+  logs?: boolean | Prisma.Warehouse$logsArgs<ExtArgs>
   _count?: boolean | Prisma.WarehouseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["warehouse"]>
 
@@ -1228,6 +1506,8 @@ export type WarehouseInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   notificationSetting?: boolean | Prisma.Warehouse$notificationSettingArgs<ExtArgs>
   notifications?: boolean | Prisma.Warehouse$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.Warehouse$pushSubscriptionsArgs<ExtArgs>
+  staffMembers?: boolean | Prisma.Warehouse$staffMembersArgs<ExtArgs>
+  logs?: boolean | Prisma.Warehouse$logsArgs<ExtArgs>
   _count?: boolean | Prisma.WarehouseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WarehouseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1247,6 +1527,8 @@ export type $WarehousePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     notificationSetting: Prisma.$NotificationSettingPayload<ExtArgs> | null
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$PushSubscriptionPayload<ExtArgs>[]
+    staffMembers: Prisma.$StaffMemberPayload<ExtArgs>[]
+    logs: Prisma.$WarehouseLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1662,6 +1944,8 @@ export interface Prisma__WarehouseClient<T, Null = never, ExtArgs extends runtim
   notificationSetting<T extends Prisma.Warehouse$notificationSettingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Warehouse$notificationSettingArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   notifications<T extends Prisma.Warehouse$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Warehouse$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.Warehouse$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Warehouse$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  staffMembers<T extends Prisma.Warehouse$staffMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Warehouse$staffMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  logs<T extends Prisma.Warehouse$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Warehouse$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WarehouseLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2234,6 +2518,54 @@ export type Warehouse$pushSubscriptionsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.PushSubscriptionScalarFieldEnum | Prisma.PushSubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Warehouse.staffMembers
+ */
+export type Warehouse$staffMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StaffMember
+   */
+  select?: Prisma.StaffMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StaffMember
+   */
+  omit?: Prisma.StaffMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StaffMemberInclude<ExtArgs> | null
+  where?: Prisma.StaffMemberWhereInput
+  orderBy?: Prisma.StaffMemberOrderByWithRelationInput | Prisma.StaffMemberOrderByWithRelationInput[]
+  cursor?: Prisma.StaffMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StaffMemberScalarFieldEnum | Prisma.StaffMemberScalarFieldEnum[]
+}
+
+/**
+ * Warehouse.logs
+ */
+export type Warehouse$logsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WarehouseLog
+   */
+  select?: Prisma.WarehouseLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WarehouseLog
+   */
+  omit?: Prisma.WarehouseLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WarehouseLogInclude<ExtArgs> | null
+  where?: Prisma.WarehouseLogWhereInput
+  orderBy?: Prisma.WarehouseLogOrderByWithRelationInput | Prisma.WarehouseLogOrderByWithRelationInput[]
+  cursor?: Prisma.WarehouseLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WarehouseLogScalarFieldEnum | Prisma.WarehouseLogScalarFieldEnum[]
 }
 
 /**

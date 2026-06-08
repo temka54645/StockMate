@@ -46,10 +46,13 @@ async function resolveWarehouseId(userId: string): Promise<string> {
 }
 
 /** API route-д хэрэглэнэ */
-export async function requireWarehouseId(): Promise<{ userId: string; warehouseId: string }> {
-  const userId = await requireUserId();
+export async function requireWarehouseId(): Promise<{ userId: string; warehouseId: string; userName: string }> {
+  const session = await auth();
+  if (!session?.user?.id) throw new UnauthorizedError();
+  const userId = session.user.id;
+  const userName = session.user.name ?? session.user.email ?? "Хэрэглэгч";
   const warehouseId = await resolveWarehouseId(userId);
-  return { userId, warehouseId };
+  return { userId, warehouseId, userName };
 }
 
 /** Page/layout-д хэрэглэнэ — нэвтрээгүй бол /login руу */

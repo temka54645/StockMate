@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Settings, Save, Loader2, Bell, Mail, Smartphone, Warehouse } from "lucide-react";
+import StaffSection from "@/components/StaffSection";
 
 interface NotifSettings {
   expiryThresholds: number[];
@@ -106,8 +107,11 @@ export default function SettingsClient() {
     <div className="space-y-6 animate-fade-in-up max-w-2xl">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Тохиргоо</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">Агуулах болон мэдэгдлийн тохиргоо</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Агуулах, ажилчид болон мэдэгдлийн тохиргоо</p>
       </div>
+
+      {/* ── Ажилчдын бүртгэл ── */}
+      <StaffSection />
 
       {/* ── Агуулахын тохиргоо ── */}
       <div className="rounded-2xl border border-border bg-card shadow-sm p-6 space-y-5">

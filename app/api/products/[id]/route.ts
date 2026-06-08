@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 const updateSchema = z.object({
@@ -20,7 +21,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { warehouseId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const { id } = await params;
     const body = await req.json();
     const data = updateSchema.parse(body);
@@ -34,6 +35,9 @@ export async function PATCH(
       where: { id },
       data,
     });
+
+    writeLog({ warehouseId, userId, userName, action: "PRODUCT_UPDATE", entityName: updated.name });
+
     return Response.json(updated);
   } catch (err) {
     if (err instanceof UnauthorizedError) return Response.json({ error: "Нэвтрэх шаардлагатай" }, { status: 401 });
@@ -47,7 +51,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { warehouseId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const { id } = await params;
 
     const product = await prisma.product.findFirst({
@@ -62,6 +66,9 @@ export async function DELETE(
     }
 
     await prisma.product.delete({ where: { id } });
+
+    writeLog({ warehouseId, userId, userName, action: "PRODUCT_DELETE", entityName: product.name });
+
     return Response.json({ ok: true });
   } catch (err) {
     if (err instanceof UnauthorizedError) return Response.json({ error: "Нэвтрэх шаардлагатай" }, { status: 401 });

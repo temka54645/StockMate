@@ -63,6 +63,8 @@ export const ModelName = {
   NotificationSetting: 'NotificationSetting',
   Notification: 'Notification',
   NotificationDelivery: 'NotificationDelivery',
+  StaffMember: 'StaffMember',
+  WarehouseLog: 'WarehouseLog',
   PushSubscription: 'PushSubscription'
 } as const
 
@@ -252,6 +254,36 @@ export const NotificationDeliveryScalarFieldEnum = {
 } as const
 
 export type NotificationDeliveryScalarFieldEnum = (typeof NotificationDeliveryScalarFieldEnum)[keyof typeof NotificationDeliveryScalarFieldEnum]
+
+
+export const StaffMemberScalarFieldEnum = {
+  id: 'id',
+  warehouseId: 'warehouseId',
+  name: 'name',
+  role: 'role',
+  phone: 'phone',
+  email: 'email',
+  notes: 'notes',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type StaffMemberScalarFieldEnum = (typeof StaffMemberScalarFieldEnum)[keyof typeof StaffMemberScalarFieldEnum]
+
+
+export const WarehouseLogScalarFieldEnum = {
+  id: 'id',
+  warehouseId: 'warehouseId',
+  userId: 'userId',
+  userName: 'userName',
+  action: 'action',
+  entityName: 'entityName',
+  qty: 'qty',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type WarehouseLogScalarFieldEnum = (typeof WarehouseLogScalarFieldEnum)[keyof typeof WarehouseLogScalarFieldEnum]
 
 
 export const PushSubscriptionScalarFieldEnum = {

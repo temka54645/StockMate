@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 const settingsSchema = z.object({
@@ -26,7 +27,7 @@ export async function GET() {
 
 export async function PATCH(req: NextRequest) {
   try {
-    const { warehouseId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const body = await req.json();
     const data = settingsSchema.parse(body);
 
@@ -35,6 +36,9 @@ export async function PATCH(req: NextRequest) {
       update: data,
       create: { warehouseId, ...data },
     });
+
+    writeLog({ warehouseId, userId, userName, action: "SETTINGS_UPDATE" });
+
     return Response.json(settings);
   } catch (err) {
     if (err instanceof UnauthorizedError) return Response.json({ error: "Нэвтрэх шаардлагатай" }, { status: 401 });

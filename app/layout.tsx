@@ -11,8 +11,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Агуулах — Барааны удирдлагын систем",
-  description: "Multi-tenant агуулахын удирдлага: бараа, орлого, зарлага, үлдэгдэл, мэдэгдэл.",
+  title: "StockMate — Барааны удирдлагын систем",
+  description: "StockMate: агуулахын бараа, орлого, зарлага, үлдэгдэл, мэдэгдлийн удирдлага.",
   manifest: "/manifest.json",
 };
 

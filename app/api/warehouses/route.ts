@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireUserId, requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 /* ── GET: хэрэглэгчийн бүх агуулах ── */
@@ -60,7 +61,7 @@ const patchSchema = z.object({
 
 export async function PATCH(req: NextRequest) {
   try {
-    const { warehouseId, userId: ownerId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const body = await req.json();
     const data = patchSchema.parse(body);
 
@@ -69,6 +70,9 @@ export async function PATCH(req: NextRequest) {
       where: { id: warehouseId },
       data,
     });
+
+    writeLog({ warehouseId, userId, userName, action: "WAREHOUSE_UPDATE" });
+
     return Response.json({
       id: updated.id,
       name: updated.name,

@@ -81,6 +81,8 @@ model Warehouse {
   notificationSetting  NotificationSetting?
   notifications        Notification[]
   pushSubscriptions    PushSubscription[]
+  staffMembers         StaffMember[]
+  logs                 WarehouseLog[]
 
   @@index([ownerId])
 }
@@ -241,6 +243,49 @@ model NotificationDelivery {
 
   @@index([notificationId])
   @@index([status, nextRetryAt])
+}
+
+/// Агуулахын ажилтны бүртгэл
+model StaffMember {
+  id          String   @id @default(cuid())
+  warehouseId String
+  name        String
+  /// "manager" | "staff" | "viewer"
+  role        String   @default("staff")
+  phone       String?
+  email       String?
+  notes       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+
+  @@index([warehouseId])
+}
+
+/// Агуулахын үйл ажиллагааны аудит лог
+model WarehouseLog {
+  id          String   @id @default(cuid())
+  warehouseId String
+  /// Үйлдэл хийсэн хэрэглэгчийн ID
+  userId      String
+  /// Хэрэглэгчийн нэрийн snapshot
+  userName    String
+  /// "STOCK_IN"|"STOCK_OUT"|"PRODUCT_CREATE"|"PRODUCT_UPDATE"|"PRODUCT_DELETE"|"STAFF_ADD"|"STAFF_REMOVE"|"SETTINGS_UPDATE"|"WAREHOUSE_UPDATE"
+  action      String
+  /// Хамаарах нэр (бараа, ажилтан, ...)
+  entityName  String?
+  /// Тоо хэмжээ — орлого/зарлагын үед
+  qty         Float?
+  /// Нэмэлт мэдээлэл (JSON string)
+  details     String?
+  createdAt   DateTime @default(now())
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+
+  @@index([warehouseId])
+  @@index([warehouseId, createdAt])
+  @@index([userId])
 }
 
 model PushSubscription {

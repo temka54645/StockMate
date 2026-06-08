@@ -78,6 +78,16 @@ export type Notification = Prisma.NotificationModel
  */
 export type NotificationDelivery = Prisma.NotificationDeliveryModel
 /**
+ * Model StaffMember
+ * Агуулахын ажилтны бүртгэл
+ */
+export type StaffMember = Prisma.StaffMemberModel
+/**
+ * Model WarehouseLog
+ * Агуулахын үйл ажиллагааны аудит лог
+ */
+export type WarehouseLog = Prisma.WarehouseLogModel
+/**
  * Model PushSubscription
  * 
  */

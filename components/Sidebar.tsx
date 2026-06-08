@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Package, PackagePlus, PackageMinus,
-  BarChart3, Bell, Settings, LogOut, Menu, X
+  BarChart3, Bell, Settings, LogOut, Menu, X, ScrollText, Warehouse
 } from "lucide-react";
 import { logoutAction } from "@/app/(auth)/actions";
 import { useState } from "react";
@@ -16,6 +16,7 @@ const nav = [
   { href: "/stock-in", icon: PackagePlus, label: "Орлого" },
   { href: "/stock-out", icon: PackageMinus, label: "Зарлага" },
   { href: "/report", icon: BarChart3, label: "Тайлан" },
+  { href: "/logs", icon: ScrollText, label: "Лог" },
   { href: "/notifications", icon: Bell, label: "Мэдэгдэл" },
   { href: "/settings", icon: Settings, label: "Тохиргоо" },
 ];
@@ -59,12 +60,16 @@ export default function Sidebar({
         className={`fixed top-0 left-0 h-full w-60 bg-card border-r border-border flex flex-col z-40 transition-transform duration-200
           ${open ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}
       >
-        {/* App brand — жижиг, дискретний */}
-        <div className="px-5 pt-5 pb-1">
-          <span className="text-xs font-bold tracking-widest text-muted-foreground/60 uppercase">
-            StoreMate
-          </span>
-        </div>
+        {/* App brand */}
+        <Link href="/" className="px-4 pt-5 pb-1 flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+            <Warehouse className="w-5 h-5 text-primary-foreground" />
+          </div>
+          <div className="flex flex-col leading-tight">
+            <span className="text-sm font-bold text-foreground">StockMate</span>
+            <span className="text-xs text-muted-foreground">Таны агуулахын туслах</span>
+          </div>
+        </Link>
 
         {/* Warehouse switcher */}
         {warehouses.length > 0 && (

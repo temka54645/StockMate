@@ -396,6 +396,8 @@ export const ModelName = {
   NotificationSetting: 'NotificationSetting',
   Notification: 'Notification',
   NotificationDelivery: 'NotificationDelivery',
+  StaffMember: 'StaffMember',
+  WarehouseLog: 'WarehouseLog',
   PushSubscription: 'PushSubscription'
 } as const
 
@@ -412,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "warehouse" | "product" | "batch" | "stockIn" | "stockOut" | "notificationSetting" | "notification" | "notificationDelivery" | "pushSubscription"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "warehouse" | "product" | "batch" | "stockIn" | "stockOut" | "notificationSetting" | "notification" | "notificationDelivery" | "staffMember" | "warehouseLog" | "pushSubscription"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1304,6 +1306,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StaffMember: {
+      payload: Prisma.$StaffMemberPayload<ExtArgs>
+      fields: Prisma.StaffMemberFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StaffMemberFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StaffMemberFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        findFirst: {
+          args: Prisma.StaffMemberFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StaffMemberFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        findMany: {
+          args: Prisma.StaffMemberFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>[]
+        }
+        create: {
+          args: Prisma.StaffMemberCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        createMany: {
+          args: Prisma.StaffMemberCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StaffMemberCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>[]
+        }
+        delete: {
+          args: Prisma.StaffMemberDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        update: {
+          args: Prisma.StaffMemberUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        deleteMany: {
+          args: Prisma.StaffMemberDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StaffMemberUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StaffMemberUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>[]
+        }
+        upsert: {
+          args: Prisma.StaffMemberUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffMemberPayload>
+        }
+        aggregate: {
+          args: Prisma.StaffMemberAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStaffMember>
+        }
+        groupBy: {
+          args: Prisma.StaffMemberGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffMemberGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StaffMemberCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffMemberCountAggregateOutputType> | number
+        }
+      }
+    }
+    WarehouseLog: {
+      payload: Prisma.$WarehouseLogPayload<ExtArgs>
+      fields: Prisma.WarehouseLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WarehouseLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WarehouseLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        findFirst: {
+          args: Prisma.WarehouseLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WarehouseLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        findMany: {
+          args: Prisma.WarehouseLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>[]
+        }
+        create: {
+          args: Prisma.WarehouseLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        createMany: {
+          args: Prisma.WarehouseLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WarehouseLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>[]
+        }
+        delete: {
+          args: Prisma.WarehouseLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        update: {
+          args: Prisma.WarehouseLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.WarehouseLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WarehouseLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WarehouseLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.WarehouseLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WarehouseLogPayload>
+        }
+        aggregate: {
+          args: Prisma.WarehouseLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWarehouseLog>
+        }
+        groupBy: {
+          args: Prisma.WarehouseLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WarehouseLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WarehouseLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WarehouseLogCountAggregateOutputType> | number
+        }
+      }
+    }
     PushSubscription: {
       payload: Prisma.$PushSubscriptionPayload<ExtArgs>
       fields: Prisma.PushSubscriptionFieldRefs
@@ -1589,6 +1739,36 @@ export const NotificationDeliveryScalarFieldEnum = {
 export type NotificationDeliveryScalarFieldEnum = (typeof NotificationDeliveryScalarFieldEnum)[keyof typeof NotificationDeliveryScalarFieldEnum]
 
 
+export const StaffMemberScalarFieldEnum = {
+  id: 'id',
+  warehouseId: 'warehouseId',
+  name: 'name',
+  role: 'role',
+  phone: 'phone',
+  email: 'email',
+  notes: 'notes',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type StaffMemberScalarFieldEnum = (typeof StaffMemberScalarFieldEnum)[keyof typeof StaffMemberScalarFieldEnum]
+
+
+export const WarehouseLogScalarFieldEnum = {
+  id: 'id',
+  warehouseId: 'warehouseId',
+  userId: 'userId',
+  userName: 'userName',
+  action: 'action',
+  entityName: 'entityName',
+  qty: 'qty',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type WarehouseLogScalarFieldEnum = (typeof WarehouseLogScalarFieldEnum)[keyof typeof WarehouseLogScalarFieldEnum]
+
+
 export const PushSubscriptionScalarFieldEnum = {
   id: 'id',
   warehouseId: 'warehouseId',
@@ -1815,6 +1995,8 @@ export type GlobalOmitConfig = {
   notificationSetting?: Prisma.NotificationSettingOmit
   notification?: Prisma.NotificationOmit
   notificationDelivery?: Prisma.NotificationDeliveryOmit
+  staffMember?: Prisma.StaffMemberOmit
+  warehouseLog?: Prisma.WarehouseLogOmit
   pushSubscription?: Prisma.PushSubscriptionOmit
 }
 

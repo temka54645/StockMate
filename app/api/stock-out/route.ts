@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
 import { getFefoBatches, allocateFifo } from "@/lib/fefo";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 const stockOutSchema = z.object({
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { warehouseId, userId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const body = await req.json();
     const data = stockOutSchema.parse(body);
 
@@ -98,6 +99,16 @@ export async function POST(req: NextRequest) {
         })
       )
     );
+
+    writeLog({
+      warehouseId,
+      userId,
+      userName,
+      action: "STOCK_OUT",
+      entityName: product.name,
+      qty: data.qty,
+      details: JSON.stringify({ recipient: data.recipient, docNo: data.docNo }),
+    });
 
     return Response.json(stockOuts, { status: 201 });
   } catch (err) {

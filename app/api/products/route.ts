@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireWarehouseId, UnauthorizedError } from "@/lib/auth-helpers";
+import { writeLog } from "@/lib/log";
 import { z } from "zod";
 
 const productSchema = z.object({
@@ -55,7 +56,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { warehouseId } = await requireWarehouseId();
+    const { warehouseId, userId, userName } = await requireWarehouseId();
     const body = await req.json();
     const data = productSchema.parse(body);
 
@@ -69,6 +70,9 @@ export async function POST(req: NextRequest) {
     const product = await prisma.product.create({
       data: { ...data, warehouseId },
     });
+
+    writeLog({ warehouseId, userId, userName, action: "PRODUCT_CREATE", entityName: product.name });
+
     return Response.json(product, { status: 201 });
   } catch (err) {
     if (err instanceof UnauthorizedError) return Response.json({ error: "Нэвтрэх шаардлагатай" }, { status: 401 });
