@@ -6,7 +6,7 @@ import { Users, Plus, Trash2, Loader2, Phone, Mail, ChevronDown } from "lucide-r
 interface StaffMember {
   id: string;
   name: string;
-  role: "manager" | "staff" | "viewer";
+  role: "director" | "manager" | "staff";
   phone: string | null;
   email: string | null;
   notes: string | null;
@@ -15,15 +15,15 @@ interface StaffMember {
 }
 
 const ROLE_LABELS: Record<string, string> = {
-  manager: "Захирал",
-  staff: "Менежер",
-  viewer: "Ажилтан",
+  director: "Захирал",
+  manager:  "Менежер",
+  staff:    "Ажилтан",
 };
 
 const ROLE_COLORS: Record<string, string> = {
-  manager: "bg-violet-100 text-violet-700 dark:bg-violet-950/50 dark:text-violet-300",
-  staff:   "bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
-  viewer:  "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400",
+  director: "bg-violet-100 text-violet-700 dark:bg-violet-950/50 dark:text-violet-300",
+  manager:  "bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
+  staff:    "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400",
 };
 
 const emptyForm = { name: "", role: "staff" as const, phone: "", email: "", notes: "" };
@@ -131,9 +131,9 @@ export default function StaffSection() {
                 onChange={(e) => setForm({ ...form, role: e.target.value as typeof form.role })}
                 className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
               >
-                <option value="manager">Захирал</option>
-                <option value="staff">Менежер</option>
-                <option value="viewer">Ажилтан</option>
+                <option value="director">Захирал</option>
+                <option value="manager">Менежер</option>
+                <option value="staff">Ажилтан</option>
               </select>
             </div>
             <div>
@@ -222,9 +222,9 @@ export default function StaffSection() {
                       disabled={editingRole === member.id}
                       className={`text-xs font-semibold px-2 py-0.5 rounded-full border-0 cursor-pointer outline-none appearance-none pr-5 ${ROLE_COLORS[member.role]}`}
                     >
-                      <option value="manager">Захирал</option>
-                      <option value="staff">Менежер</option>
-                      <option value="viewer">Ажилтан</option>
+                      <option value="director">Захирал</option>
+                      <option value="manager">Менежер</option>
+                      <option value="staff">Ажилтан</option>
                     </select>
                     <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-60" />
                   </div>

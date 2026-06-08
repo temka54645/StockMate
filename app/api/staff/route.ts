@@ -6,7 +6,7 @@ import { z } from "zod";
 
 const staffSchema = z.object({
   name:  z.string().min(1, "Нэр шаардлагатай").max(100),
-  role:  z.enum(["manager", "staff", "viewer"]).default("staff"),
+  role:  z.enum(["director", "manager", "staff"]).default("staff"),
   phone: z.string().max(30).nullable().optional(),
   email: z.string().email("Имэйл буруу формат").max(100).nullable().optional(),
   notes: z.string().max(500).nullable().optional(),

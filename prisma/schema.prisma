@@ -250,7 +250,7 @@ model StaffMember {
   id          String   @id @default(cuid())
   warehouseId String
   name        String
-  /// "manager" | "staff" | "viewer"
+  /// "director" | "manager" | "staff"
   role        String   @default("staff")
   phone       String?
   email       String?
