@@ -15,9 +15,9 @@ interface StaffMember {
 }
 
 const ROLE_LABELS: Record<string, string> = {
-  manager: "Менежер",
-  staff: "Ажилтан",
-  viewer: "Харагч",
+  manager: "Захирал",
+  staff: "Менежер",
+  viewer: "Ажилтан",
 };
 
 const ROLE_COLORS: Record<string, string> = {
@@ -131,9 +131,9 @@ export default function StaffSection() {
                 onChange={(e) => setForm({ ...form, role: e.target.value as typeof form.role })}
                 className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
               >
-                <option value="manager">Менежер</option>
-                <option value="staff">Ажилтан</option>
-                <option value="viewer">Харагч</option>
+                <option value="manager">Захирал</option>
+                <option value="staff">Менежер</option>
+                <option value="viewer">Ажилтан</option>
               </select>
             </div>
             <div>
@@ -222,9 +222,9 @@ export default function StaffSection() {
                       disabled={editingRole === member.id}
                       className={`text-xs font-semibold px-2 py-0.5 rounded-full border-0 cursor-pointer outline-none appearance-none pr-5 ${ROLE_COLORS[member.role]}`}
                     >
-                      <option value="manager">Менежер</option>
-                      <option value="staff">Ажилтан</option>
-                      <option value="viewer">Харагч</option>
+                      <option value="manager">Захирал</option>
+                      <option value="staff">Менежер</option>
+                      <option value="viewer">Ажилтан</option>
                     </select>
                     <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-60" />
                   </div>
